@@ -1,283 +1,647 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Portfolio Website</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sai Charishma Kallepalli — Software Developer</title>
+<meta name="description" content="Portfolio of Sai Charishma Kallepalli — Full-Stack Software Developer" />
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:     '#1A1A1A',
+          paper:   '#FFFFFF',
+          soft:    '#F7F6F4',
+          muted:   '#6B7280',
+          line:    '#E7E5E1',
+          crimson: '#DC143C',
+          crimsond:'#B01030',
+        },
+        fontFamily: {
+          head: ['"Space Grotesk"', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+        },
+      },
+    },
+  }
+</script>
+
+<!--
+  ============================================================
+  HOW TO ADD YOUR OWN IMAGES
+  ============================================================
+  Put a folder named "images" next to this file and drop in:
+    images/profile.jpg        -> your hero photo
+    images/project1.jpg       -> QuickKart screenshot
+    images/project2.jpg       -> Polyclinic screenshot
+    images/project3.jpg       -> Chat App screenshot
+  Nothing else needs to change — this file already points at
+  those paths and shows a placeholder frame until each image
+  exists.
+
+  EMAIL SENDING — READ ME
+  ============================================================
+  Browsers cannot open raw SMTP sockets, and hard-coding SMTP
+  credentials into a static HTML file would expose them to
+  anyone who views the page source. The standard, secure way
+  to send email from a static site is EmailJS: it holds your
+  SMTP/Gmail connection server-side and you call it from JS.
+
+  Setup (5 minutes, free tier is plenty):
+  1. Create an account at https://www.emailjs.com
+  2. Add an Email Service (Gmail/Outlook/custom SMTP).
+  3. Create an Email Template with variables: from_name,
+     from_email, subject, message.
+  4. Paste your Public Key, Service ID and Template ID into
+     the CONFIG block near the bottom of this file (search
+     "EMAILJS CONFIG").
+  Until then, the form falls back to opening the visitor's
+  email client with a pre-filled message.
+  ============================================================
+-->
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { background-color: #FFFFFF; }
+
+  ::selection { background: #DC143C; color: #fff; }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #F7F6F4; }
+  ::-webkit-scrollbar-thumb { background: #DC143C; border-radius: 6px; }
+
+  :focus-visible { outline: 2px solid #DC143C; outline-offset: 3px; }
+
+  /* section title with crimson underline, callback to original site's title style */
+  .section-title { position: relative; display: inline-block; }
+  .section-title::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -12px;
+    width: 64px; height: 3px;
+    background: #DC143C;
+    border-radius: 2px;
+    transition: width 0.35s ease;
+  }
+  .section-title:hover::after { width: 100%; }
+
+  /* crimson invert button, mirrors original CSS's border:2px solid crimson hover */
+  .btn-crimson {
+    background: #DC143C;
+    color: #fff;
+    border: 2px solid #DC143C;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .btn-crimson:hover {
+    background: transparent;
+    color: #DC143C;
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px -10px rgba(220,20,60,0.45);
+  }
+  .btn-outline {
+    background: transparent;
+    color: #1A1A1A;
+    border: 2px solid #1A1A1A;
+    transition: all 0.25s ease;
+  }
+  .btn-outline:hover {
+    border-color: #DC143C;
+    color: #DC143C;
+    transform: scale(1.05);
+  }
+
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0; height: 2px;
+    background: #DC143C;
+    transition: width 0.25s ease;
+  }
+  .nav-link:hover::after { width: 100%; }
+
+  .field {
+    background: #fff;
+    border: 2px solid #E7E5E1;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .field:focus { border-color: #DC143C; box-shadow: 0 0 0 4px rgba(220,20,60,0.1); }
+
+  /* card hover lift + crimson glow */
+  .lift-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .lift-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 48px -20px rgba(220,20,60,0.28);
+    border-color: #DC143C;
+  }
+
+  /* skill icon pop */
+  .skill-icon {
+    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  }
+  .skill-item:hover .skill-icon {
+    transform: translateY(-4px) scale(1.08);
+    background: #DC143C;
+    border-color: #DC143C;
+  }
+  .skill-item:hover .skill-icon i { color: #fff !important; }
+  .skill-item:hover .skill-label { color: #DC143C; }
+
+  /* project image zoom */
+  .img-wrap { overflow: hidden; }
+  .img-wrap img { transition: transform 0.5s ease; }
+  .lift-card:hover .img-wrap img { transform: scale(1.08); }
+
+  /* hero profile frame */
+  .frame-offset {
+    position: relative;
+  }
+  .frame-offset::before {
+    content: "";
+    position: absolute;
+    top: -14px; left: -14px;
+    width: 100%; height: 100%;
+    border: 2px solid #DC143C;
+    border-radius: 1rem;
+    z-index: 0;
+  }
+  .frame-offset > * { position: relative; z-index: 1; }
+
+  /* reveal on scroll, single orchestrated pass, respects reduced motion */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  .dots-bg {
+    background-image: radial-gradient(#DC143C22 1.5px, transparent 1.5px);
+    background-size: 18px 18px;
+  }
+</style>
 </head>
-<body>
-    <div class="scroll-up-btn">
-        <i class="fas fa-angle-up"></i>
-    </div>
-    <nav class="navbar">
-        <div class="max-width">
-            <div class="logo"><a href="#">Portfo<span>lio.</span></a></div>
-            <ul class="menu">
-                <li><a href="#home" class="menu-btn">Home</a></li>
-                <li><a href="#about" class="menu-btn">About</a></li>
-                <li><a href="#services" class="menu-btn">Services</a></li>
-                <li><a href="#skills" class="menu-btn">Skills</a></li>
-                <li><a href="#Projects" class="menu-btn">Projects</a></li>
-                <li><a href="#contact" class="menu-btn">Contact</a></li>
-            </ul>
-            <div class="menu-btn">
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>
+
+<body class="bg-paper text-ink font-body antialiased">
+
+<!-- ============ NAV ============ -->
+<header id="top" class="fixed top-0 inset-x-0 z-50 border-b border-line bg-paper/90 backdrop-blur">
+  <div class="max-w-6xl mx-auto px-6 sm:px-10 h-16 flex items-center justify-between">
+    <a href="#top" class="font-head font-semibold text-lg tracking-tight text-ink">
+      SC<span class="text-crimson">.</span>Kallepalli
+    </a>
+    <nav class="hidden md:flex items-center gap-8 text-sm text-muted">
+      <a href="#about" class="nav-link hover:text-ink transition-colors">About</a>
+      <a href="#experience" class="nav-link hover:text-ink transition-colors">Experience</a>
+      <a href="#skills" class="nav-link hover:text-ink transition-colors">Skills</a>
+      <a href="#projects" class="nav-link hover:text-ink transition-colors">Projects</a>
+      <a href="#contact" class="nav-link hover:text-ink transition-colors">Contact</a>
     </nav>
+    <a href="#contact" class="hidden md:inline-flex btn-crimson items-center gap-2 text-sm font-medium px-5 py-2 rounded-full">
+      Let's talk
+    </a>
+    <button id="menuBtn" aria-label="Open menu" aria-expanded="false" class="md:hidden text-ink text-2xl leading-none">☰</button>
+  </div>
+  <nav id="mobileMenu" class="hidden md:hidden border-t border-line px-6 py-4 flex flex-col gap-4 text-sm text-muted bg-paper">
+    <a href="#about" class="hover:text-crimson">About</a>
+    <a href="#experience" class="hover:text-crimson">Experience</a>
+    <a href="#skills" class="hover:text-crimson">Skills</a>
+    <a href="#projects" class="hover:text-crimson">Projects</a>
+    <a href="#contact" class="hover:text-crimson">Contact</a>
+  </nav>
+</header>
 
-    <!-- home section start -->
-    <section class="home" id="home">
-        <div class="max-width">
-            <div class="home-content">
-                <div class="text-1">Hello, my name is</div>
-                <div class="text-2">Sai Charishma Kallepalli</div>
-                <div class="text-3">And I'm a <span class="typing"></span></div>
-                <a href="#">Hire me</a>
-            </div>
-        </div>
-    </section>
+<!-- ============ HERO / ABOUT ============ -->
+<section id="about" class="pt-36 pb-24 px-6 sm:px-10 border-b border-line dots-bg">
+  <div class="max-w-6xl mx-auto grid lg:grid-cols-[1.15fr_0.85fr] gap-16 items-center">
 
-    <!-- about section start -->
-    <section class="about" id="about">
-        <div class="max-width">
-            <h2 class="title">About me</h2>
-            <div class="about-content">
-                <div class="column left">
-                    <img src="images/profile-1.jpeg" alt="">
-                </div>
-                <div class="column right">
-                    <div class="text">I'm Sai Charishma and I'm a <span class="typing-2"></span></div>
-                    <p>Passionate web developer with hands-on experience in creating dynamic and responsive web applications using the MERN stack. Skilled in implementing complex functionalities, optimizing performance, and delivering user-friendly interfaces. Committed to continuous learning and staying updated with industry trends to provide innovative solutions.</p>
-                    <a href="images/CHARISHMAResume-2-1-2.pdf" download class="resume-link">Download Resume</a>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/in/sai-charishma-kallepalli-7b9b15297?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                        <a href="https://github.com/SaiCharishm" target="_blank" class="social-link"><i class="fab fa-github"></i> GitHub</a>
-                        <a href="https://www.instagram.com/charishma_c28" target="_blank" class="social-link"><i class="fab fa-instagram"></i> Instagram</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="reveal">
+      <p class="text-sm font-semibold tracking-wide text-crimson mb-5">Full-stack software developer</p>
+      <h1 class="font-head font-semibold text-4xl sm:text-5xl lg:text-[3.3rem] leading-[1.1] text-ink">
+        Sai Charishma Kallepalli builds reliable, real-time software from database to browser.
+      </h1>
+      <p class="mt-6 text-muted text-lg leading-relaxed max-w-xl">
+        I work across Java, Python, TypeScript, React and Angular on the frontend, and Spring Boot,
+        ASP.NET Core and Node.js on the backend — integrating REST APIs and WebSockets, and managing
+        data in MongoDB and SQL Server. Currently a System Engineer at Infosys, Bangalore, shipping
+        production applications for enterprise teams.
+      </p>
 
-    <!-- services section start -->
-    <section class="services" id="services">
-        <div class="max-width">
-            <h2 class="title">My services</h2>
-            <div class="serv-content">
-                <div class="card">
-                    <div class="box">
-                        <i class="fas fa-paint-brush"></i>
-                        <div class="text">Web Development</div>
-                        <p>"Creating dynamic and responsive web applications using the latest technologies to ensure seamless user experiences across all devices."</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="box">
-                        <i class="fas fa-chart-line"></i>
-                        <div class="text">UI Development</div>
-                        <p>"Developing intuitive and engaging user interfaces that enhance user interaction and streamline the navigation process."</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="box">
-                        <i class="fas fa-code"></i>
-                        <div class="text">UI Designing</div>
-                        <p>"Designing visually appealing and user-friendly interfaces that prioritize usability and aesthetic harmony, ensuring a delightful user journey."</p>
-                    </div>
-                </div>
-            </div>
+      <div class="mt-9 flex flex-wrap items-center gap-4">
+        <a href="mailto:charishmac28@gmail.com" class="btn-crimson inline-flex items-center gap-2 font-medium px-6 py-3 rounded-full">
+          Email me
+        </a>
+        <a href="https://github.com/charishmac28" target="_blank" rel="noopener" class="btn-outline inline-flex items-center gap-2 px-6 py-3 rounded-full">
+          GitHub ↗
+        </a>
+        <a href="https://www.linkedin.com/in/sai-charishma-kallepalli-7b9b15297/" target="_blank" rel="noopener" class="btn-outline inline-flex items-center gap-2 px-6 py-3 rounded-full">
+          LinkedIn ↗
+        </a>
+      </div>
+
+      <div class="mt-12 grid grid-cols-3 gap-6 max-w-md">
+        <div>
+          <p class="font-head text-2xl text-ink">8.5<span class="text-crimson">/10</span></p>
+          <p class="text-xs text-muted mt-1">B.E. ECE CGPA</p>
         </div>
-    </section>
-    <!-- skills section start -->
-<section class="skills" id="skills">
-    <div class="max-width">
-        <h2 class="title">My Skills</h2>
-        <div class="skills-content">
-            <!-- Tech Skills -->
-            <div class="skill-category">
-                <h3 class="category-title">Tech Skills</h3>
-                <div class="skills-icons">
-                    <div class="skill-item">
-                        <i class="fas fa-code"></i>
-                        <span class="skill-name">C++</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="fab fa-python"></i>
-                        <span class="skill-name">Python</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="fab fa-java"></i>
-                        <span class="skill-name">Java</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="fas fa-code"></i>
-                        <span class="skill-name">C</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Web Skills -->
-            <div class="skill-category">
-                <h3 class="category-title">Web Skills</h3>
-                <div class="skills-icons">
-                    <div class="skill-item">
-                        <i class="fab fa-html5"></i>
-                        <span class="skill-name">HTML</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="fab fa-css3-alt"></i>
-                        <span class="skill-name">CSS</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="fab fa-js-square"></i>
-                        <span class="skill-name">JavaScript</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="fab fa-react"></i>
-                        <span class="skill-name">React</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="fab fa-node-js"></i>
-                        <span class="skill-name">Node.js</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="fas fa-database"></i>
-                        <span class="skill-name">MongoDB</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Tools -->
-            <div class="skill-category">
-                <h3 class="category-title">Tools</h3>
-                <div class="skills-icons">
-                    <div class="skill-item">
-                        <i class="fab fa-git"></i>
-                        <span class="skill-name">Git</span>
-                    </div>
-                    <div class="skill-item">
-                        <i class="fas fa-code"></i>
-                        <span class="skill-name">VS Code</span>
-                    </div>
-                </div>
-            </div>
+        <div>
+          <p class="font-head text-2xl text-ink">3</p>
+          <p class="text-xs text-muted mt-1">Shipped projects</p>
         </div>
+        <div>
+          <p class="font-head text-2xl text-ink">2026</p>
+          <p class="text-xs text-muted mt-1">Infosys, Bangalore</p>
+        </div>
+      </div>
     </div>
+
+    <!-- profile photo slot -->
+    <div class="frame-offset reveal justify-self-center">
+      <div class="w-64 sm:w-80 aspect-[4/5] rounded-2xl overflow-hidden bg-soft border-2 border-line flex items-center justify-center">
+        <img
+          src="images/profile-1.jpeg"
+          alt="Sai Charishma Kallepalli"
+          class="w-full h-full object-cover"
+          onerror="this.onerror=null; this.replaceWith(Object.assign(document.createElement('div'), {className:'w-full h-full flex flex-col items-center justify-center gap-3 text-muted', innerHTML:'<i class=\'fa-solid fa-user text-5xl text-crimson/70\'></i><span class=\'text-xs font-medium\'>Add images/profile.jpg</span>'}))"
+        >
+      </div>
+    </div>
+
+  </div>
 </section>
 
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience" class="py-24 px-6 sm:px-10 border-b border-line">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-14 max-w-xl reveal">
+      <h2 class="section-title font-head font-semibold text-3xl sm:text-4xl text-ink">Experience &amp; education</h2>
+      <p class="mt-6 text-muted">From training to production, in order.</p>
+    </div>
 
-   <!-- projects section start -->
-    <section class="projects" id="projects">
-        <div class="max-width">
-            <h2 class="title">My Projects</h2>
-            <div class="projects-content">
-                <div class="card">
-                    <img src="images/portfolioImage1.jpeg" alt="Restaurant Project">
-                    <div class="text">
-                        <h3>Restaurant</h3>
-                        <p>A dynamic and responsive restaurant website featuring a menu, booking system, and more.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="images/portfolioImage2.jpeg" alt="Quiz App">
-                    <div class="text">
-                        <h3>Quiz App</h3>
-                        <p>An interactive quiz application with real-time feedback and scoring.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="images/portfolioImage3.jpeg" alt="Product Landing Page">
-                    <div class="text">
-                        <h3>Product Landing Page</h3>
-                        <p>A visually appealing landing page for showcasing a new product.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="images/portfolioImage4.jpeg" alt="Messaging Service">
-                    <div class="text">
-                        <h3>Messaging Service</h3>
-                        <p>A messaging application with real-time chat features and user authentication.</p>
-                    </div>
-                </div>
-               
-                <div class="card">
-                    <img src="images/portfolioImage5.jpeg" alt="Blog App">
-                    <div class="text">
-                        <h3>Blog App</h3>
-                        <p>A blog application with features for creating, editing, and deleting posts.</p>
-                    </div>
-                </div>
-            </div>
+    <div class="grid md:grid-cols-[1fr_1.6fr] gap-12">
+
+      <div class="relative pl-8 reveal">
+        <div class="absolute left-[7px] top-1 bottom-1 w-px bg-line"></div>
+
+        <div class="relative mb-12">
+          <span class="absolute -left-8 top-1 w-3.5 h-3.5 rounded-full bg-crimson ring-4 ring-white"></span>
+          <p class="text-xs font-semibold text-crimson">Jan 2026 — Present</p>
+          <h3 class="font-head text-lg text-ink mt-1">System Engineer</h3>
+          <p class="text-sm text-muted">Infosys, Bangalore</p>
         </div>
-    </section>
 
-    <!-- contact section start -->
-    <section class="contact" id="contact">
-        <div class="max-width">
-            <h2 class="title">Contact me</h2>
-            <div class="contact-content">
-                <div class="column left">
-                    <div class="text">Get in touch</div>
-                    <p>If you have any questions, project inquiries, or just want to connect, feel free to reach out! I'm always open to discussing new opportunities and collaborations. Drop me a message using the form below, or connect with me through my social media channels.</p>
-                    <div class="icons">
-                        <div class="row">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div class="info">
-                                <div class="head">Address</div>
-                                <div class="sub-title">10-1-2,vasa samuel street,18th ward,narsapur</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <i class="fas fa-phone-alt"></i>
-                            <div class="info">
-                                <div class="head">Phone</div>
-                                <div class="sub-title">91 9392777539</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <i class="fas fa-envelope"></i>
-                            <div class="info">
-                                <div class="head">Email</div>
-                                <div class="sub-title">charishmac28@gmail.com</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="column right">
-                    <form action="#">
-                        <div class="fields">
-                            <div class="field name">
-                                <input type="text" placeholder="Name" required>
-                            </div>
-                            <div class="field email">
-                                <input type="email" placeholder="Email" required>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <input type="text" placeholder="Subject" required>
-                        </div>
-                        <div class="field textarea">
-                            <textarea rows="10" placeholder="Message" required></textarea>
-                        </div>
-                        <div class="button">
-                            <button type="submit">Send Message</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <div class="relative mb-12">
+          <span class="absolute -left-8 top-1 w-3.5 h-3.5 rounded-full bg-line ring-4 ring-white"></span>
+          <p class="text-xs font-semibold text-muted">Aug 2025 — Jan 2026</p>
+          <h3 class="font-head text-lg text-ink mt-1">System Engineer Trainee</h3>
+          <p class="text-sm text-muted">Infosys, Mysore</p>
         </div>
-    </section>
 
-    <script src="script.js"></script>
+        <div class="relative">
+          <span class="absolute -left-8 top-1 w-3.5 h-3.5 rounded-full bg-line ring-4 ring-white"></span>
+          <p class="text-xs font-semibold text-muted">Nov 2021 — Apr 2025</p>
+          <h3 class="font-head text-lg text-ink mt-1">B.E., Electronics &amp; Communication</h3>
+          <p class="text-sm text-muted">SRKR Engineering College, Bhimavaram — CGPA 8.5/10</p>
+        </div>
+      </div>
+
+      <div class="space-y-8 reveal">
+        <div class="lift-card border-2 border-line rounded-xl p-6 bg-soft">
+          <h4 class="font-head text-ink text-base mb-3">System Engineer — Infosys, Bangalore</h4>
+          <ul class="space-y-2.5 text-sm text-muted leading-relaxed list-disc list-inside marker:text-crimson">
+            <li>Develop and maintain real-time enterprise applications in production, contributing to scalable, reliable software.</li>
+            <li>Collaborate with cross-functional teams to debug and resolve functional and performance issues, improving application stability and efficiency.</li>
+          </ul>
+        </div>
+        <div class="lift-card border-2 border-line rounded-xl p-6 bg-soft">
+          <h4 class="font-head text-ink text-base mb-3">System Engineer Trainee — Infosys, Mysore</h4>
+          <ul class="space-y-2.5 text-sm text-muted leading-relaxed list-disc list-inside marker:text-crimson">
+            <li>Completed comprehensive training across backend, frontend and database technologies.</li>
+            <li>Built and deployed applications following industry-standard software design practices.</li>
+            <li>Gained hands-on experience with application architecture, debugging and performance optimization.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills" class="py-24 px-6 sm:px-10 border-b border-line bg-soft">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-14 max-w-xl reveal">
+      <h2 class="section-title font-head font-semibold text-3xl sm:text-4xl text-ink">Skills</h2>
+      <p class="mt-6 text-muted">Tools I reach for across the stack.</p>
+    </div>
+
+    <div id="skillsGrid" class="grid gap-10 reveal"></div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects" class="py-24 px-6 sm:px-10 border-b border-line">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-14 max-w-xl reveal">
+      <h2 class="section-title font-head font-semibold text-3xl sm:text-4xl text-ink">Projects</h2>
+      <p class="mt-6 text-muted">A few things I've built end to end.</p>
+    </div>
+
+    <div id="projectsGrid" class="grid md:grid-cols-3 gap-6 reveal"></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="py-24 px-6 sm:px-10">
+  <div class="max-w-6xl mx-auto grid lg:grid-cols-[1fr_1.3fr] gap-16">
+
+    <div class="reveal">
+      <h2 class="section-title font-head font-semibold text-3xl sm:text-4xl text-ink">Get in touch</h2>
+      <p class="mt-6 text-muted leading-relaxed max-w-sm">
+        Have a role, a project, or just want to talk shop about real-time systems? My inbox is open.
+      </p>
+
+      <div class="mt-10 space-y-5 text-sm">
+        <div>
+          <p class="text-muted text-xs mb-1">Email</p>
+          <a href="mailto:charishmac28@gmail.com" class="text-ink font-medium hover:text-crimson transition-colors">charishmac28@gmail.com</a>
+        </div>
+        <div>
+          <p class="text-muted text-xs mb-1">Location</p>
+          <p class="text-ink font-medium">Narsapur, Andhra Pradesh, India</p>
+        </div>
+      </div>
+
+      <div class="mt-10 flex gap-4">
+        <a href="https://github.com/charishmac28" target="_blank" rel="noopener" class="btn-outline px-5 py-2.5 rounded-full text-sm">GitHub</a>
+        <a href="https://www.linkedin.com/in/sai-charishma-kallepalli-7b9b15297/" target="_blank" rel="noopener" class="btn-outline px-5 py-2.5 rounded-full text-sm">LinkedIn</a>
+      </div>
+    </div>
+
+    <form id="contactForm" class="space-y-5 reveal">
+      <div class="grid sm:grid-cols-2 gap-5">
+        <div>
+          <label for="from_name" class="text-xs font-medium text-muted mb-2 block">Name</label>
+          <input id="from_name" name="from_name" type="text" required
+                 class="field w-full rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/60"
+                 placeholder="Your name">
+        </div>
+        <div>
+          <label for="from_email" class="text-xs font-medium text-muted mb-2 block">Email</label>
+          <input id="from_email" name="from_email" type="email" required
+                 class="field w-full rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/60"
+                 placeholder="you@example.com">
+        </div>
+      </div>
+      <div>
+        <label for="subject" class="text-xs font-medium text-muted mb-2 block">Subject</label>
+        <input id="subject" name="subject" type="text" required
+               class="field w-full rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/60"
+               placeholder="What's this about?">
+      </div>
+      <div>
+        <label for="message" class="text-xs font-medium text-muted mb-2 block">Message</label>
+        <textarea id="message" name="message" rows="5" required
+                  class="field w-full rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/60 resize-none"
+                  placeholder="Tell me a bit about what you're building..."></textarea>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <button type="submit" id="submitBtn" class="btn-crimson inline-flex items-center gap-2 font-medium px-7 py-3 rounded-full disabled:opacity-60">
+          Send message
+        </button>
+        <p id="formStatus" class="text-sm text-muted"></p>
+      </div>
+    </form>
+
+  </div>
+</section>
+
+<footer class="border-t border-line py-8 px-6 sm:px-10">
+  <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-muted">
+    <p>© <span id="year"></span> Sai Charishma Kallepalli</p>
+    <p>Built with Tailwind CSS</p>
+  </div>
+</footer>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ===================== SKILLS DATA =====================
+  // Edit this to add/remove skills. `icon` is a devicon class
+  // (https://devicon.dev) or a Font Awesome class as fallback.
+  const skillCategories = [
+    {
+      name: 'Languages',
+      skills: [
+        { name: 'Java', icon: 'devicon-java-plain colored' },
+        { name: 'Python', icon: 'devicon-python-plain colored' },
+        { name: 'JavaScript', icon: 'devicon-javascript-plain colored' },
+        { name: 'TypeScript', icon: 'devicon-typescript-plain colored' },
+      ],
+    },
+    {
+      name: 'Backend',
+      skills: [
+        { name: 'Spring Boot', icon: 'devicon-spring-plain colored' },
+        { name: 'ASP.NET Core', icon: 'devicon-dotnetcore-plain colored' },
+        { name: 'Node.js', icon: 'devicon-nodejs-plain colored' },
+        { name: 'Express.js', icon: 'devicon-express-original' },
+        { name: 'REST APIs', icon: 'fa-solid fa-diagram-project' },
+        { name: 'WebSockets', icon: 'fa-solid fa-bolt' },
+      ],
+    },
+    {
+      name: 'Frontend',
+      skills: [
+        { name: 'React', icon: 'devicon-react-original colored' },
+        { name: 'Angular', icon: 'devicon-angular-plain colored' },
+        { name: 'HTML5', icon: 'devicon-html5-plain colored' },
+        { name: 'CSS3', icon: 'devicon-css3-plain colored' },
+        { name: 'Bootstrap', icon: 'devicon-bootstrap-plain colored' },
+      ],
+    },
+    {
+      name: 'Databases & Tools',
+      skills: [
+        { name: 'MongoDB', icon: 'devicon-mongodb-plain colored' },
+        { name: 'SQL Server', icon: 'devicon-microsoftsqlserver-plain colored' },
+        { name: 'DBMS (HSQL)', icon: 'fa-solid fa-database' },
+        { name: 'Git', icon: 'devicon-git-plain colored' },
+      ],
+    },
+  ];
+
+  const skillsGrid = document.getElementById('skillsGrid');
+  skillCategories.forEach(cat => {
+    const block = document.createElement('div');
+    block.innerHTML = `
+      <h3 class="text-sm font-semibold text-crimson mb-5">${cat.name}</h3>
+      <div class="flex flex-wrap gap-4">
+        ${cat.skills.map(s => `
+          <div class="skill-item flex flex-col items-center gap-2 w-20">
+            <div class="skill-icon w-14 h-14 rounded-xl bg-white border-2 border-line flex items-center justify-center">
+              <i class="${s.icon} text-2xl text-ink"></i>
+            </div>
+            <span class="skill-label text-xs text-muted text-center transition-colors">${s.name}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    skillsGrid.appendChild(block);
+  });
+
+  // ===================== PROJECTS DATA =====================
+  // Edit this array to add, remove, or update projects. Drop
+  // matching screenshots into an "images" folder next to this
+  // file (images/project1.jpg etc.) — a placeholder shows until
+  // the file exists, so nothing else needs to change.
+  const projects = [
+    {
+      title: 'QuickKart',
+      tagline: 'Full-stack e-commerce system',
+      description: 'A full-stack e-commerce platform with product browsing, cart management, order processing and REST APIs, built during internship. Uses MongoDB for efficient data storage with a scalable, layered architecture.',
+      image: '/images/quickkart_image.png',
+      tags: ['MongoDB', 'REST API', 'Node.js'],
+      live: '#',   // TODO: your live deployment URL
+      github: '#', // TODO: your GitHub repo URL
+    },
+    {
+      title: 'Polyclinic',
+      tagline: 'Healthcare management system',
+      description: 'A web-based healthcare system for patient records, appointment scheduling and clinical workflows, with backend services, API integration and database management for reliable data handling.',
+      image: 'images/project2.jpg',
+      tags: ['REST API', 'SQL Server', 'Backend'],
+      live: '#',   // TODO: your live deployment URL
+      github: '#', // TODO: your GitHub repo URL
+    },
+    {
+      title: 'Real-Time Chat App',
+      tagline: 'Real-time communication system',
+      description: 'A real-time chat application built with React, TypeScript, Spring Boot and WebSockets — integrated with MongoDB and the Gemini API for AI-powered chat features.',
+      image: 'images/project3.jpg',
+      tags: ['React', 'WebSockets', 'Spring Boot'],
+      live: '#',   // TODO: your live deployment URL
+      github: '#', // TODO: your GitHub repo URL
+    },
+  ];
+
+  const projectsGrid = document.getElementById('projectsGrid');
+  projects.forEach(p => {
+    const card = document.createElement('article');
+    card.className = 'lift-card flex flex-col border-2 border-line rounded-xl bg-white overflow-hidden';
+    card.innerHTML = `
+      <div class="img-wrap relative aspect-[16/10] bg-soft border-b-2 border-line">
+        <img src="${p.image}" alt="${p.title} screenshot" class="w-full h-full object-left"
+             onerror="this.onerror=null; this.closest('.img-wrap').classList.add('flex','items-center','justify-center'); this.replaceWith(Object.assign(document.createElement('div'), {className:'flex flex-col items-center gap-2 text-muted', innerHTML:'<i class=\\'fa-solid fa-image text-3xl text-crimson/60\\'></i><span class=\\'text-xs font-medium\\'>Add ${p.image}</span>'}));">
+      </div>
+      <div class="p-6 flex-1">
+        <h3 class="font-head text-lg text-ink mb-1">${p.title}</h3>
+        <p class="text-xs text-crimson font-medium mb-4">${p.tagline}</p>
+        <p class="text-sm text-muted leading-relaxed">${p.description}</p>
+        <div class="flex flex-wrap gap-2 mt-5">
+          ${p.tags.map(t => `<span class="text-xs px-2.5 py-1 rounded-full border border-line text-ink/80">${t}</span>`).join('')}
+        </div>
+      </div>
+      <div class="flex border-t-2 border-line text-xs font-medium">
+        <a href="${p.live}" target="_blank" rel="noopener" class="flex-1 text-center py-3 text-ink hover:bg-crimson hover:text-white transition-colors border-r-2 border-line">Live demo ↗</a>
+        <a href="${p.github}" target="_blank" rel="noopener" class="flex-1 text-center py-3 text-ink hover:bg-crimson hover:text-white transition-colors">GitHub ↗</a>
+      </div>
+    `;
+    projectsGrid.appendChild(card);
+  });
+
+  // mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => {
+    const isOpen = !mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden');
+    menuBtn.setAttribute('aria-expanded', String(!isOpen));
+  });
+  mobileMenu.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => mobileMenu.classList.add('hidden'))
+  );
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // ===================== EMAILJS CONFIG =====================
+  // Replace these three values with your own from emailjs.com.
+  // Leave EMAILJS_PUBLIC_KEY as-is to use the mailto fallback.
+  const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
+  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
+  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+  // ============================================================
+
+  if (window.emailjs && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  }
+
+  const form = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formStatus = document.getElementById('formStatus');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    const name = data.get('from_name');
+    const email = data.get('from_email');
+    const subject = data.get('subject');
+    const message = data.get('message');
+
+    const configured = EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY'
+      && EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID'
+      && EMAILJS_TEMPLATE_ID !== 'YOUR_TEMPLATE_ID';
+
+    if (configured && window.emailjs) {
+      submitBtn.disabled = true;
+      formStatus.textContent = 'Sending…';
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        from_name: name, from_email: email, subject: subject, message: message,
+      }).then(() => {
+        formStatus.textContent = 'Message sent — thank you!';
+        form.reset();
+      }).catch(() => {
+        formStatus.textContent = 'Something went wrong. Try the fallback below.';
+      }).finally(() => {
+        submitBtn.disabled = false;
+      });
+    } else {
+      const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+      window.location.href = `mailto:charishmac28@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+      formStatus.textContent = 'Opening your email client…';
+    }
+  });
+
+  // sticky nav shadow
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('shadow-lg', window.scrollY > 10);
+  });
+</script>
+
 </body>
 </html>
